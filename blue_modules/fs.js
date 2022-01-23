@@ -1,4 +1,3 @@
-/* global alert */
 import { Alert, Linking, PermissionsAndroid, Platform } from 'react-native';
 import RNFS from 'react-native-fs';
 import Share from 'react-native-share';
@@ -9,6 +8,7 @@ import { presentCameraNotAuthorizedAlert } from '../class/camera';
 import { isDesktop } from '../blue_modules/environment';
 import ActionSheet from '../screen/ActionSheet';
 import BlueClipboard from './clipboard';
+import alert from '../components/Alert';
 const LocalQRCode = require('@remobile/react-native-qrcode-local-image');
 
 const writeFileAndExportToAndroidDestionation = async ({ filename, contents, destinationLocalizedString, destination }) => {
@@ -74,7 +74,7 @@ const writeFileAndExport = async function (filename, contents) {
  */
 const openSignedTransaction = async function () {
   try {
-    const res = await DocumentPicker.pick({
+    const res = await DocumentPicker.pickSingle({
       type: Platform.OS === 'ios' ? ['io.bluewallet.psbt', 'io.bluewallet.psbt.txn'] : [DocumentPicker.types.allFiles],
     });
 
@@ -161,7 +161,7 @@ const takePhotoWithImagePickerAndReadPhoto = () => {
 
 const showFilePickerAndReadFile = async function () {
   try {
-    const res = await DocumentPicker.pick({
+    const res = await DocumentPicker.pickSingle({
       type:
         Platform.OS === 'ios'
           ? [

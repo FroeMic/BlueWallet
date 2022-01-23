@@ -21,7 +21,7 @@ const ImportCustomDerivationPath = () => {
   const { colors } = useTheme();
   const route = useRoute();
   const importText = route.params.importText;
-  const passphrase = route.params.passphrase;
+  const password = route.params.password;
   const { addAndSaveWallet } = useContext(BlueStorageContext);
   const [path, setPath] = useState("m/84'/0'/0'");
   const [wallets, setWallets] = useState({});
@@ -41,7 +41,7 @@ const ImportCustomDerivationPath = () => {
       for (const Wallet of [HDLegacyP2PKHWallet, HDSegwitP2SHWallet, HDSegwitBech32Wallet]) {
         const wallet = new Wallet();
         wallet.setSecret(importText);
-        wallet.setPassphrase(passphrase);
+        wallet.setPassphrase(password);
         wallet.setDerivationPath(path);
         wallets[Wallet.type] = wallet;
       }
@@ -132,6 +132,7 @@ const ImportCustomDerivationPath = () => {
         data={items}
         keyExtractor={w => path + w[0]}
         renderItem={renderItem}
+        contentContainerStyle={styles.flatListContainer}
         ListEmptyComponent={() => <BlueTextCentered>{loc.wallets.import_wrong_path}</BlueTextCentered>}
       />
 
@@ -152,6 +153,8 @@ const ImportCustomDerivationPath = () => {
 const styles = StyleSheet.create({
   root: {
     paddingTop: 10,
+  },
+  flatListContainer: {
     marginHorizontal: 16,
   },
   listContainer: {
@@ -168,6 +171,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderWidth: 1,
     borderBottomWidth: 0.5,
+    marginHorizontal: 16,
     minHeight: 44,
     height: 44,
     alignItems: 'center',

@@ -15,7 +15,7 @@ import {
 import navigationStyle from '../../components/navigationStyle';
 import Privacy from '../../blue_modules/Privacy';
 import loc from '../../loc';
-import { isDesktop, isMacCatalina } from '../../blue_modules/environment';
+import { isMacCatalina } from '../../blue_modules/environment';
 import { BlueStorageContext } from '../../blue_modules/storage-context';
 const fs = require('../../blue_modules/fs');
 
@@ -52,6 +52,12 @@ const WalletsImport = () => {
     },
   });
 
+  const onBlur = () => {
+    const valueWithSingleWhitespace = importText.replace(/^\s+|\s+$|\s+(?=\s)/g, '');
+    setImportText(valueWithSingleWhitespace);
+    return valueWithSingleWhitespace;
+  };
+
   useEffect(() => {
     Privacy.enableBlur();
     Keyboard.addListener(Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow', () => setIsToolbarVisibleForAndroid(true));
@@ -70,10 +76,11 @@ const WalletsImport = () => {
   }, []);
 
   const importButtonPressed = () => {
-    if (importText.trim().length === 0) {
+    const textToImport = onBlur();
+    if (textToImport.trim().length === 0) {
       return;
     }
-    importMnemonic(importText);
+    importMnemonic(textToImport);
   };
 
   const importMnemonic = importText => {
@@ -110,21 +117,8 @@ const WalletsImport = () => {
     });
   };
 
-  return (
-    <SafeBlueArea style={styles.root}>
-      <BlueSpacing20 />
-      <TouchableWithoutFeedback onPress={speedBackdoorTap} testID="SpeedBackdoor">
-        <BlueFormLabel>{loc.wallets.import_explanation}</BlueFormLabel>
-      </TouchableWithoutFeedback>
-      <BlueSpacing20 />
-      <BlueFormMultiInput
-        value={importText}
-        contextMenuHidden={!isDesktop}
-        onChangeText={setImportText}
-        testID="MnemonicInput"
-        inputAccessoryViewID={BlueDoneAndDismissKeyboardInputAccessory.InputAccessoryViewID}
-      />
-
+  const renderOptionsAndImportButton = (
+    <>
       {isAdvancedModeEnabledRender && (
         <>
           <View style={styles.row}>
@@ -151,6 +145,25 @@ const WalletsImport = () => {
           <BlueButtonLink title={loc.wallets.import_scan_qr} onPress={importScan} testID="ScanImport" />
         </>
       </View>
+    </>
+  );
+
+  return (
+    <SafeBlueArea style={styles.root}>
+      <BlueSpacing20 />
+      <TouchableWithoutFeedback onPress={speedBackdoorTap} testID="SpeedBackdoor">
+        <BlueFormLabel>{loc.wallets.import_explanation}</BlueFormLabel>
+      </TouchableWithoutFeedback>
+      <BlueSpacing20 />
+      <BlueFormMultiInput
+        value={importText}
+        onBlur={onBlur}
+        onChangeText={setImportText}
+        testID="MnemonicInput"
+        inputAccessoryViewID={BlueDoneAndDismissKeyboardInputAccessory.InputAccessoryViewID}
+      />
+
+      {Platform.select({ android: !isToolbarVisibleForAndroid && renderOptionsAndImportButton, default: renderOptionsAndImportButton })}
       {Platform.select({
         ios: (
           <BlueDoneAndDismissKeyboardInputAccessory

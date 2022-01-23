@@ -139,7 +139,7 @@ const WalletsList = () => {
   const refreshTransactions = async (showLoadingIndicator = true, showUpdateStatusIndicator = false) => {
     if (isElectrumDisabled) return setIsLoading(false);
     setIsLoading(showLoadingIndicator);
-    refreshAllWalletTransactions(showLoadingIndicator, showUpdateStatusIndicator).finally(() => setIsLoading(false));
+    refreshAllWalletTransactions(false, showUpdateStatusIndicator).finally(() => setIsLoading(false));
   };
 
   useEffect(() => {
@@ -207,7 +207,7 @@ const WalletsList = () => {
   const renderTransactionListsRow = data => {
     return (
       <View style={styles.transaction}>
-        <TransactionListItem item={data.item} itemPriceUnit={data.item.walletPreferredBalanceUnit} />
+        <TransactionListItem item={data.item} itemPriceUnit={data.item.walletPreferredBalanceUnit} walletID={data.item.walletID} />
       </View>
     );
   };

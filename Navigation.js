@@ -290,6 +290,23 @@ const ScanLndInvoiceRoot = () => {
   );
 };
 
+const LDKOpenChannelStack = createNativeStackNavigator();
+const LDKOpenChannelRoot = () => {
+  const theme = useTheme();
+
+  return (
+    <LDKOpenChannelStack.Navigator name="LDKOpenChannelRoot" screenOptions={{ headerHideShadow: true }} initialRouteName="SelectWallet">
+      <LDKOpenChannelStack.Screen name="SelectWallet" component={SelectWallet} options={SelectWallet.navigationOptions(theme)} />
+      <LDKOpenChannelStack.Screen
+        name="LDKOpenChannelSetAmount"
+        component={LdkOpenChannel}
+        options={LdkOpenChannel.navigationOptions(theme)}
+      />
+      <LDKOpenChannelStack.Screen name="Success" component={Success} options={{ headerShown: false, gestureEnabled: false }} />
+    </LDKOpenChannelStack.Navigator>
+  );
+};
+
 const AztecoRedeemStack = createNativeStackNavigator();
 const AztecoRedeemRoot = () => {
   const theme = useTheme();
@@ -304,7 +321,7 @@ const AztecoRedeemRoot = () => {
 
 const ScanQRCodeStack = createNativeStackNavigator();
 const ScanQRCodeRoot = () => (
-  <ScanQRCodeStack.Navigator screenOptions={{ headerShown: false, stackPresentation: 'fullScreenModal' }}>
+  <ScanQRCodeStack.Navigator screenOptions={{ headerShown: false, stackPresentation: isDesktop ? 'containedModal' : 'fullScreenModal' }}>
     <RootStack.Screen name="ScanQRCode" component={ScanQRCode} />
   </ScanQRCodeStack.Navigator>
 );
@@ -419,7 +436,7 @@ const InitRoot = () => (
     <InitStack.Screen
       name="ReorderWallets"
       component={ReorderWalletsStackRoot}
-      options={{ headerShown: false, gestureEnabled: false, stackPresentation: 'fullScreenModal' }}
+      options={{ headerShown: false, gestureEnabled: false, stackPresentation: isDesktop ? 'containedModal' : 'fullScreenModal' }}
     />
     <InitStack.Screen
       name={isHandset ? 'Navigation' : 'DrawerRoot'}
@@ -503,7 +520,7 @@ const Navigation = () => {
       <RootStack.Screen
         name="ExportMultisigCoordinationSetupRoot"
         component={ExportMultisigCoordinationSetupRoot}
-        options={{ headerShown: false }}
+        options={NavigationDefaultOptions}
       />
       <RootStack.Screen name="ViewEditMultisigCosignersRoot" component={ViewEditMultisigCosignersRoot} options={NavigationDefaultOptions} />
       <RootStack.Screen name="WalletXpubRoot" component={WalletXpubStackRoot} options={NavigationDefaultOptions} />
@@ -514,13 +531,14 @@ const Navigation = () => {
       <RootStack.Screen name="ReceiveDetailsRoot" component={ReceiveDetailsStackRoot} options={NavigationDefaultOptions} />
       <RootStack.Screen name="LappBrowserRoot" component={LappBrowserStackRoot} options={NavigationDefaultOptions} />
       <RootStack.Screen name="AOPPRoot" component={AOPPRoot} options={NavigationDefaultOptions} />
+      <RootStack.Screen name="LDKOpenChannelRoot" component={LDKOpenChannelRoot} options={NavigationDefaultOptions} />
 
       <RootStack.Screen
         name="ScanQRCodeRoot"
         component={ScanQRCodeRoot}
         options={{
           headerShown: false,
-          stackPresentation: 'fullScreenModal',
+          stackPresentation: isDesktop ? 'containedModal' : 'fullScreenModal',
         }}
       />
     </RootStack.Navigator>

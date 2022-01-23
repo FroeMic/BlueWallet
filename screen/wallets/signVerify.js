@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   LayoutAnimation,
   Platform,
+  StatusBar,
   StyleSheet,
   TextInput,
   TouchableWithoutFeedback,
@@ -144,6 +145,7 @@ const SignVerify = () => {
 
   return (
     <SafeBlueArea style={[styles.root, stylesHooks.root]}>
+      <StatusBar barStyle="light-content" />
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
         <KeyboardAvoidingView style={[styles.root, stylesHooks.root]}>
           {!isKeyboardVisible && (

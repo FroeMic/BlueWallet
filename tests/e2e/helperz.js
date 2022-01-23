@@ -1,12 +1,12 @@
 const createHash = require('create-hash');
 
-export async function yo(id, timeout = 33000) {
+export function yo(id, timeout = 33000) {
   return waitFor(element(by.id(id)))
     .toBeVisible()
     .withTimeout(timeout);
 }
 
-export async function sup(text, timeout = 33000) {
+export function sup(text, timeout = 33000) {
   return waitFor(element(by.text(text)))
     .toBeVisible()
     .withTimeout(timeout);
@@ -56,7 +56,7 @@ export async function helperDeleteWallet(label, remainingBalanceSat = false) {
   await element(by.text('Yes, delete')).tap();
   if (remainingBalanceSat) {
     await element(by.type('android.widget.EditText')).typeText(remainingBalanceSat);
-    await element(by.text('OK')).tap();
+    await element(by.text('Delete')).tap();
   }
   await expect(element(by.id('NoTransactionsMessage'))).toBeVisible();
 }

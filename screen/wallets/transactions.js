@@ -1,4 +1,3 @@
-/* global alert */
 import React, { useEffect, useState, useCallback, useContext, useRef } from 'react';
 import {
   ActivityIndicator,
@@ -35,6 +34,7 @@ import BlueClipboard from '../../blue_modules/clipboard';
 import LNNodeBar from '../../components/LNNodeBar';
 import TransactionsNavigationHeader from '../../components/TransactionsNavigationHeader';
 import { TransactionListItem } from '../../components/TransactionListItem';
+import alert from '../../components/Alert';
 
 const fs = require('../../blue_modules/fs');
 const BlueElectrum = require('../../blue_modules/BlueElectrum');
@@ -400,7 +400,9 @@ const WalletTransactions = () => {
     });
   };
 
-  const renderItem = item => <TransactionListItem item={item.item} itemPriceUnit={itemPriceUnit} timeElapsed={timeElapsed} />;
+  const renderItem = item => (
+    <TransactionListItem item={item.item} itemPriceUnit={itemPriceUnit} timeElapsed={timeElapsed} walletID={walletID} />
+  );
 
   const onBarCodeRead = ret => {
     if (!isLoading) {
@@ -741,7 +743,6 @@ const styles = StyleSheet.create({
     minHeight: 130,
   },
   walletDetails: {
-    minWidth: 150,
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
