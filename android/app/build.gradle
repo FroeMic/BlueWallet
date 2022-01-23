@@ -136,7 +136,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "at.frhlch.cdtm.bluewallet"
+        applicationId "io.bluewallet.bluewallet"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

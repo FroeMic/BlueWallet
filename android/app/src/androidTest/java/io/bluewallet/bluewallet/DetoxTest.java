@@ -1,4 +1,4 @@
-package at.frhlch.cdtm.bluewallet;
+package io.bluewallet.bluewallet;
 
 import com.wix.detox.Detox;
 
