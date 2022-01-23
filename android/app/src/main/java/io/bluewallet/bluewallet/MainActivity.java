@@ -1,4 +1,4 @@
-package io.bluewallet.bluewallet;
+package at.frhlch.cdtm.bluewallet;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
