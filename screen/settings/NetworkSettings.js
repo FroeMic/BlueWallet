@@ -35,7 +35,7 @@ const NetworkSettings = () => {
             chevron
           />
         )}
-        {isTorCapable && <BlueListItem title={loc.settings.tor_settings} onPress={navigateToTorSettings} testID="TorSettings" chevron />}
+        {false && isTorCapable && <BlueListItem title={loc.settings.tor_settings} onPress={navigateToTorSettings} testID="TorSettings" chevron />}
       </ScrollView>
     </SafeBlueArea>
   );
