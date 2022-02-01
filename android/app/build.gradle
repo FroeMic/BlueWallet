@@ -184,7 +184,7 @@ dependencies {
     implementation files("../../node_modules/rn-ldk/android/libs/LDK-release.aar")
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
-    implementation files("../../node_modules/react-native-tor/android/libs/sifir_android.aar")
+    // implementation files("../../node_modules/react-native-tor/android/libs/sifir_android.aar")
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
