@@ -18,6 +18,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  splash: {
+    paddingTop: 75,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  splashImage: {
+    width: 400,
+    height: 400,
+  },
   biometric: {
     flex: 1,
     justifyContent: 'flex-end',
@@ -54,6 +64,11 @@ const UnlockWith = () => {
     }
 
     setBiometricType(biometricType);
+
+    // a hack to get rid of the lottie Animation
+    setTimeout(() => {
+      onAnimationFinish();
+    }, 3000);
   };
 
   useEffect(() => {
@@ -136,7 +151,9 @@ const UnlockWith = () => {
     <SafeAreaView style={styles.root}>
       <StatusBar barStyle="default" />
       <View style={styles.container}>
-        <LottieView source={require('./img/bluewalletsplash.json')} autoPlay loop={false} onAnimationFinish={onAnimationFinish} />
+        <View style={styles.splash}>
+          <Image source={require('./img/splash/splash.png')} style={styles.splashImage} />
+        </View>
         <View style={styles.biometric}>{animationDidFinish && <View style={styles.biometricRow}>{renderUnlockOptions()}</View>}</View>
       </View>
     </SafeAreaView>
