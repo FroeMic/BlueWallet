@@ -40,7 +40,6 @@ import Privacy from './blue_modules/Privacy';
 import { Mixpanel } from 'mixpanel-react-native';
 const mixpanel = new Mixpanel('425350a060a23f8407ac8286223628d8');
 mixpanel.init();
-mixpanel.track('Sent Message');
 
 const A = require('./blue_modules/analytics');
 const currency = require('./blue_modules/currency');
@@ -298,6 +297,23 @@ const App = () => {
     }
     if (nextAppState === 'background'){
       mixpanel.track('APP_EVENT_BACKGROUND', {'state': nextAppState});
+    }
+
+    if (wallets.length > 0) {
+      let _wallets = [];
+      wallets.forEach(wallet => {
+        _wallets.push({
+          'id': wallet.getID(),
+          'type': wallet.type,
+          'balance': wallet.balance,
+          'walletPreferredBalanceUnit': wallet.walletPreferredBalanceUnit,
+          // 'transactions_raw': wallet.transactions_raw,
+          // 'user_invoices_raw': wallet.user_invoices_raw,
+          '_lastBalanceFetch': wallet._lastBalanceFetch,
+          // '_lastTxFetch': wallet._lastTxFetch
+        })
+      });
+      mixpanel.registerSuperProperties({'wallets': JSON.stringify(_wallets)});
     }
 
     if (wallets.length === 0) return;
