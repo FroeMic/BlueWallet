@@ -167,6 +167,58 @@ const WalletsList = () => {
         'walletLastFetch': wallet._lastBalanceFetch
       });
 
+      for (tx of wallet.getTransactions()) {
+        // Created lightning invoice
+        if (tx.type === 'user_invoice') {
+          console.log('LDK_USER_INVOICE');
+          mixpanel.track('TRANSACTION', {
+            'walletID': tx.walletID,
+            'walletPreferredBalanceUnit': tx.walletPreferredBalanceUnit, 
+            'txValue': tx.value,
+            'txAddIndex': tx.add_index,
+            'txDescription': tx.description,
+            'txType': tx.type,
+            'txMemo': tx.memo,
+            'txExpireTime': tx.expire_time,
+            'txIsPaid': tx.ispaid, 
+            'txPaymentRequest': tx.payment_request, 
+            'txPaymentHash': tx.payment_hash,
+            'txTimestamp': tx.timestamp
+          });   
+        }
+
+        // Paid lightning invoice
+        if (tx.type === 'paid_invoice') {
+          console.log('LDK_PAID_INVOICE');
+          mixpanel.track('TRANSACTION', {
+            'walletID': tx.walletID,
+            'txValue': tx.value,
+            'txType': tx.type,
+            'txTimestamp': tx.timestamp
+          });   
+        }
+
+        // BITCOIN Transaction
+        if (tx.txid) {
+          console.log('BTC_TRANSACTION');
+          mixpanel.track('TRANSACTION', {
+            'walletID': tx.walletID,
+            'txid': tx.txid,
+            'txValue': tx.value,
+            'txHash': tx.hash,
+            'txType': 'btc_transaction',
+            'txTimestamp': tx.sort_ts,
+            'txWeight': tx.weight,
+            'txVsize': tx.vsize,
+            'txSize': tx.size,
+            'txVersion': tx.version,
+            'tx.confirmations': tx.confirmations
+          });   
+        }
+  
+      }
+      
+
       navigate('WalletTransactions', {
         walletID,
         walletType: wallet.type,
