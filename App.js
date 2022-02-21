@@ -36,6 +36,12 @@ import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import ActionSheet from './screen/ActionSheet';
 import HandoffComponent from './components/handoff';
 import Privacy from './blue_modules/Privacy';
+
+import { Mixpanel } from 'mixpanel-react-native';
+const mixpanel = new Mixpanel('425350a060a23f8407ac8286223628d8');
+mixpanel.init();
+mixpanel.track('Sent Message');
+
 const A = require('./blue_modules/analytics');
 const currency = require('./blue_modules/currency');
 
@@ -284,6 +290,16 @@ const App = () => {
   };
 
   const handleAppStateChange = async nextAppState => {
+    if (nextAppState === 'active'){
+      mixpanel.track('APP_EVENT_ACTIVE', {'state': nextAppState});
+    }
+    if (nextAppState === 'inactive'){
+      mixpanel.track('APP_EVENT_INACTIVE', {'state': nextAppState});
+    }
+    if (nextAppState === 'background'){
+      mixpanel.track('APP_EVENT_BACKGROUND', {'state': nextAppState});
+    }
+
     if (wallets.length === 0) return;
     if ((appState.current.match(/background/) && nextAppState === 'active') || nextAppState === undefined) {
       setTimeout(() => A(A.ENUM.APP_UNSUSPENDED), 2000);
