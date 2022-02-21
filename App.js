@@ -303,13 +303,13 @@ const App = () => {
       let _wallets = [];
       wallets.forEach(wallet => {
         _wallets.push({
-          'id': wallet.getID(),
-          'type': wallet.type,
-          'balance': wallet.balance,
+          'walletID': wallet.getID(),
+          'walletType': wallet.type,
+          'walletBalance': wallet.balance,
           'walletPreferredBalanceUnit': wallet.walletPreferredBalanceUnit,
           // 'transactions_raw': wallet.transactions_raw,
           // 'user_invoices_raw': wallet.user_invoices_raw,
-          '_lastBalanceFetch': wallet._lastBalanceFetch,
+          // '_lastBalanceFetch': wallet._lastBalanceFetch,
           // '_lastTxFetch': wallet._lastTxFetch
         })
       });

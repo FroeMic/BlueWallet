@@ -195,7 +195,7 @@ export const BlueStorageProvider = ({ children }) => {
     await saveToDisk();
     
     console.log('IMPORTED_WALLET');
-    console.log({
+    mixpanel.track('IMPORTED_WALLET', {
       'walletID': w.getID(),
       'walletType': w.type,
       'walletAddress': w._address,

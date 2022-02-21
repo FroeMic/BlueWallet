@@ -157,7 +157,7 @@ const WalletsAdd = () => {
         A(A.ENUM.CREATED_WALLET);
 
         console.log('CREATED_WALLET');
-        console.log({
+        mixpanel.track('CREATED_WALLET', {
           'walletID': w.getID(),
           'walletType': w.type,
           'walletAddress': w._address,
@@ -202,7 +202,7 @@ const WalletsAdd = () => {
     A(A.ENUM.CREATED_WALLET);
 
     console.log('CREATED_WALLET');
-    console.log({
+    mixpanel.track('CREATED_WALLET', {
       'walletID': wallet.getID(),
       'walletType': wallet.type,
       'walletAddress': wallet._address,
@@ -248,7 +248,7 @@ const WalletsAdd = () => {
     A(A.ENUM.CREATED_WALLET);
 
     console.log('CREATED_WALLET');
-    console.log({
+    mixpanel.track('CREATED_WALLET', {
       'walletID': wallet.getID(),
       'walletType': wallet.type,
       'walletAddress': wallet._address,

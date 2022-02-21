@@ -174,6 +174,17 @@ const WalletsAddMultisigStep2 = () => {
     addWallet(w);
     await saveToDisk();
     A(A.ENUM.CREATED_WALLET);
+    
+    console.log('CREATED_WALLET');
+    mixpanel.track('CREATED_WALLET', {
+      'walletID': w.getID(),
+      'walletType': w.type,
+      'walletAddress': w._address,
+      'walletBalance': w.balance,
+      'walletPreferredBalanceUnit': w.walletPreferredBalanceUnit,
+      'walletLastFetch': w._lastBalanceFetch
+    });
+
     ReactNativeHapticFeedback.trigger('notificationSuccess', { ignoreAndroidSystemSettings: false });
     navigation.dangerouslyGetParent().goBack();
   };
