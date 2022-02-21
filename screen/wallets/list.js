@@ -33,6 +33,10 @@ const A = require('../../blue_modules/analytics');
 const fs = require('../../blue_modules/fs');
 const WalletsListSections = { CAROUSEL: 'CAROUSEL', TRANSACTIONS: 'TRANSACTIONS' };
 
+import { Mixpanel } from 'mixpanel-react-native';
+const mixpanel = new Mixpanel('425350a060a23f8407ac8286223628d8');
+mixpanel.init();
+
 const WalletsList = () => {
   const walletsCarousel = useRef();
   const currentWalletIndex = useRef(0);
@@ -152,6 +156,17 @@ const WalletsList = () => {
     if (index <= wallets.length - 1) {
       const wallet = wallets[index];
       const walletID = wallet.getID();
+
+      console.log('CLICKED_WALLET');
+      mixpanel.track('CLICKED_WALLET', {
+        'walletID': wallet.getID(),
+        'walletType': wallet.type,
+        'walletAddress': wallet._address,
+        'walletBalance': wallet.balance,
+        'walletPreferredBalanceUnit': wallet.walletPreferredBalanceUnit,
+        'walletLastFetch': wallet._lastBalanceFetch
+      });
+
       navigate('WalletTransactions', {
         walletID,
         walletType: wallet.type,

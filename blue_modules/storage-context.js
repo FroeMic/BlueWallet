@@ -14,6 +14,10 @@ const BlueElectrum = require('./BlueElectrum');
 const currency = require('../blue_modules/currency');
 const A = require('../blue_modules/analytics');
 
+import { Mixpanel } from 'mixpanel-react-native';
+const mixpanel = new Mixpanel('425350a060a23f8407ac8286223628d8');
+mixpanel.init();
+
 const _lastTimeTriedToRefetchWallet = {}; // hashmap of timestamps we _started_ refetching some wallet
 
 export const WalletTransactionsStatus = { NONE: false, ALL: true };
@@ -189,6 +193,18 @@ export const BlueStorageProvider = ({ children }) => {
     w.setUserHasSavedExport(true);
     addWallet(w);
     await saveToDisk();
+    
+    console.log('IMPORTED_WALLET');
+    console.log({
+      'walletID': w.getID(),
+      'walletType': w.type,
+      'walletAddress': w._address,
+      'walletBalance': w.balance,
+      'walletPreferredBalanceUnit': w.walletPreferredBalanceUnit,
+      'walletLastFetch': w._lastBalanceFetch
+    });
+
+
     A(A.ENUM.CREATED_WALLET);
     Alert.alert('', loc.wallets.import_success);
     Notifications.majorTomToGroundControl(w.getAllExternalAddresses(), [], []);

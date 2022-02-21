@@ -42,6 +42,10 @@ import { LdkButton } from '../../components/LdkButton';
 import alert from '../../components/Alert';
 const A = require('../../blue_modules/analytics');
 
+import { Mixpanel } from 'mixpanel-react-native';
+const mixpanel = new Mixpanel('425350a060a23f8407ac8286223628d8');
+mixpanel.init();
+
 const ButtonSelected = Object.freeze({
   ONCHAIN: Chain.ONCHAIN,
   OFFCHAIN: Chain.OFFCHAIN,
@@ -151,6 +155,17 @@ const WalletsAdd = () => {
         addWallet(w);
         await saveToDisk();
         A(A.ENUM.CREATED_WALLET);
+
+        console.log('CREATED_WALLET');
+        console.log({
+          'walletID': w.getID(),
+          'walletType': w.type,
+          'walletAddress': w._address,
+          'walletBalance': w.balance,
+          'walletPreferredBalanceUnit': w.walletPreferredBalanceUnit,
+          'walletLastFetch': w._lastBalanceFetch
+        });
+
         ReactNativeHapticFeedback.trigger('notificationSuccess', { ignoreAndroidSystemSettings: false });
         if (w.type === HDSegwitP2SHWallet.type || w.type === HDSegwitBech32Wallet.type) {
           navigate('PleaseBackup', {
@@ -185,6 +200,17 @@ const WalletsAdd = () => {
     await saveToDisk();
 
     A(A.ENUM.CREATED_WALLET);
+
+    console.log('CREATED_WALLET');
+    console.log({
+      'walletID': wallet.getID(),
+      'walletType': wallet.type,
+      'walletAddress': wallet._address,
+      'walletBalance': wallet.balance,
+      'walletPreferredBalanceUnit': wallet.walletPreferredBalanceUnit,
+      'walletLastFetch': wallet._lastBalanceFetch
+    });
+
     ReactNativeHapticFeedback.trigger('notificationSuccess', { ignoreAndroidSystemSettings: false });
     navigate('PleaseBackupLdk', {
       walletID: wallet.getID(),
@@ -220,6 +246,17 @@ const WalletsAdd = () => {
     await saveToDisk();
 
     A(A.ENUM.CREATED_WALLET);
+
+    console.log('CREATED_WALLET');
+    console.log({
+      'walletID': wallet.getID(),
+      'walletType': wallet.type,
+      'walletAddress': wallet._address,
+      'walletBalance': wallet.balance,
+      'walletPreferredBalanceUnit': wallet.walletPreferredBalanceUnit,
+      'walletLastFetch': wallet._lastBalanceFetch
+    });
+
     ReactNativeHapticFeedback.trigger('notificationSuccess', { ignoreAndroidSystemSettings: false });
     navigate('PleaseBackupLNDHub', {
       walletID: wallet.getID(),

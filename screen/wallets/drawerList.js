@@ -10,6 +10,10 @@ import WalletsCarousel from '../../components/WalletsCarousel';
 import loc from '../../loc';
 import { BlueStorageContext } from '../../blue_modules/storage-context';
 
+import { Mixpanel } from 'mixpanel-react-native';
+const mixpanel = new Mixpanel('425350a060a23f8407ac8286223628d8');
+mixpanel.init();
+
 const DrawerList = props => {
   const walletsCarousel = useRef();
   const { wallets, selectedWallet } = useContext(BlueStorageContext);
@@ -34,6 +38,17 @@ const DrawerList = props => {
     if (index <= wallets.length - 1) {
       const wallet = wallets[index];
       const walletID = wallet.getID();
+
+      console.log('CLICKED_WALLET')
+      mixpanel.track('CLICKED_WALLET', {
+        'walletID': wallet.getID(),
+        'walletType': wallet.type,
+        'walletAddress': wallet._address,
+        'walletBalance': wallet.balance,
+        'walletPreferredBalanceUnit': wallet.walletPreferredBalanceUnit,
+        'walletLastFetch': wallet._lastBalanceFetch
+      });
+      
       props.navigation.navigate('WalletTransactions', {
         walletID: wallet.getID(),
         walletType: wallet.type,

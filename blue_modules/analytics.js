@@ -20,7 +20,9 @@ BlueApp.isDoNotTrackEnabled().then(value => {
   if (value) userHasOptedOut = true;
 });
 
-const A = async event => {};
+const A = async event => {
+  // console.log('EVENT', event);
+};
 
 A.ENUM = {
   INIT: 'INIT',
