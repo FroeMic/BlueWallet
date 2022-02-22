@@ -139,7 +139,7 @@ android {
         applicationId "at.frhlch.cdtm.bluewallet"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
+        versionCode 4
         versionName "6.2.17"
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
